@@ -103,8 +103,8 @@ class Settings:
                     "] in your ini file is deprecated" +\
                     " and should be removed\n"
 
-        if len(error_msg) > 0:
-            raise AssertionError("\n" + error_msg)
+        #if len(error_msg) > 0:
+        #    raise AssertionError("\n" + error_msg)
         if len(warning_msg) > 0:
             logger.info("\n" + warning_msg)
 
@@ -113,7 +113,7 @@ class Settings:
 
         network_settings = self.get_settings_section(
             "Network Settings")
-         if network_settings['isIPV6'].lower() == 'true':
+        if network_settings['isIPV6'].lower() == 'true':
             self.enable_ipv6 = True
         else:
             self.enable_ipv6 = False
@@ -146,25 +146,26 @@ class Settings:
         self.public_api_gateway = network_settings['public_api_gateway']
         self.provisioning_vlanid = network_settings[
             'provisioning_vlanid']
+        self.provisioning_netmask = network_settings[
+            'provisioning_netmask']
         self.provisioning_gateway = network_settings[
             'provisioning_gateway']
         self.storage_vlanid = network_settings['storage_vlanid']
         self.storage_gateway = network_settings['storage_gateway']
-        if(self.provisioning_ipv6== False):
+        if(self.enable_ipv6== False):
             self.storage_netmask = network_settings['storage_netmask']
         self.public_api_vlanid = network_settings['public_api_vlanid']
         self.public_api_netmask = network_settings[
             'public_api_netmask']
         self.private_api_vlanid = network_settings[
             'private_api_vlanid']
-        if(self.provisioning_ipv6== False):
+        if(self.enable_ipv6== False):
             self.private_api_netmask = network_settings[
                 'private_api_netmask']
         self.management_network = network_settings[
             'management_network']
         self.management_vlanid = network_settings['management_vlanid']
-        if(self.provisioning_ipv6== False):
-            self.management_netmask = network_settings['management_netmask']
+        self.management_netmask = network_settings['management_netmask']
         self.management_gateway = network_settings['management_gateway']
         self.management_allocation_pool_start = network_settings[
             'management_allocation_pool_start']
