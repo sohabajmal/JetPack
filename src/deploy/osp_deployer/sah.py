@@ -373,7 +373,8 @@ class Sah(InfraHost):
         conf = conf + (PROVISIONING_IF
                        + "        "
                        + self.settings.director_node.provisioning_ip
-                       + "    " + self.settings.provisioning_netmask
+                       #+ "    " + self.settings.provisioning_netmask
+                       + "    " + "0.0.0.0"
                        + "     " + self.settings.provisioning_network_mtu,)
         conf = conf + (MANAGEMENT_IF
                        + "        "

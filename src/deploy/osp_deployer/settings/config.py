@@ -146,7 +146,8 @@ class Settings:
         self.public_api_gateway = network_settings['public_api_gateway']
         self.provisioning_vlanid = network_settings[
             'provisioning_vlanid']
-        self.provisioning_netmask = network_settings[
+        if(self.enable_ipv6== False):
+            self.provisioning_netmask = network_settings[
             'provisioning_netmask']
         self.provisioning_gateway = network_settings[
             'provisioning_gateway']

@@ -2566,9 +2566,21 @@ class Director(InfraHost):
         hostname = (setts.director_node.hostname + '.'
                     + setts.domain)
         subnets = set({'ctlplane-subnet'})
-
+        if setts.enable_ipv6==True:
+            uconf.set('DEFAULT', 'ipv6_address_mode',
+                  'dhcpv6-stateful')
+            uconf.set('DEFAULT', 'enable_routed_networks',
+                  'false')
+            uconf.set('DEFAULT', 'ironic_enabled_network_interfaces',
+                  'neutron,flat')
+            uconf.set('DEFAULT', 'ironic_default_network_interface',
+                  'neutron')
         uconf.set('DEFAULT', 'undercloud_hostname', hostname)
-        uconf.set('DEFAULT', 'local_ip',
+        if setts.enable_ipv6==True:
+            uconf.set('DEFAULT', 'local_ip',
+                  setts.director_node.provisioning_ip + '/64')
+        else:
+            uconf.set('DEFAULT', 'local_ip',
                   setts.director_node.provisioning_ip + '/24')
         uconf.set('DEFAULT', 'local_interface',
                   PROVISIONING_IF)
@@ -2578,7 +2590,8 @@ class Director(InfraHost):
                                         + '.yaml')
         uconf.set('DEFAULT', 'container_images_file', _cnt_images_file)
 
-        uconf.set('DEFAULT', 'undercloud_nameservers',
+        if setts.enable_ipv6==False:
+            uconf.set('DEFAULT', 'undercloud_nameservers',
                   setts.name_server)
         uconf.set('DEFAULT', 'undercloud_ntp_servers',
                   setts.sah_node.provisioning_ip)

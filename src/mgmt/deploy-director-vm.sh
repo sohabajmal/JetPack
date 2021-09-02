@@ -112,7 +112,7 @@ do
     }
 
   [[ ${iface} == enp2s0 ]] && {
-    echo "echo network --activate --onboot=true --noipv6 --device=${iface} --bootproto=static --ip=${ip} --netmask=${mask} --gateway=${Gateway} --nodefroute --mtu=${mtu} >> /tmp/ks_include.txt"
+     echo "echo network --activate --onboot=true --noipv4 --device=${iface} --bootproto=static --ipv6=${ip}  --gateway=${Gateway} --nodefroute --mtu=${mtu} >> /tmp/ks_include.txt"
     }
   [[ ${iface} == enp3s0 ]] && {
     echo "echo network --activate --onboot=true --noipv6 --device=${iface} --bootproto=static --ip=${ip} --netmask=${mask} --gateway=${Gateway} --nodefroute --mtu=${mtu} >> /tmp/ks_include.txt"

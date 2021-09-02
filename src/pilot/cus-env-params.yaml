@@ -1,0 +1,6 @@
+parameter_defaults:
+  IronicIpVersion: 6
+  #RabbitIPv6: True
+  #MysqlIPv6: True
+  #RedisIPv6: True
+
