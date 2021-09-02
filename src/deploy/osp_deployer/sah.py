@@ -154,17 +154,17 @@ class Sah(InfraHost):
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^br_prov_boot_opts=.*',
                                       'br_prov_boot_opts="onboot static ' +
-                                      sets.sah_node.provisioning_ip + '/' +
-                                      sets.provisioning_netmask + '"')
+                                      sets.sah_node.provisioning_ip + '"')
+                                      #sets.provisioning_netmask + '"')
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^br_stor_boot_opts=.*',
                                       'br_stor_boot_opts="onboot static ' +
-                                      sets.sah_node.storage_ip + '/' +
-                                      sets.storage_netmask + '"')
+                                      sets.sah_node.storage_ip + '"' )
+                                      #sets.storage_netmask + '"')
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^br_mgmt_boot_opts=.*',
                                       'br_mgmt_boot_opts="onboot static ' +
-                                      sets.sah_node.management_ip + '/' +
+                                      sets.sah_node.management_ip + '"'+
                                       sets.management_netmask + '"')
 
         FileHelper.replace_expression(sets.sah_kickstart,
@@ -175,8 +175,8 @@ class Sah(InfraHost):
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^br_priv_api_boot_opts=.*',
                                       'br_priv_api_boot_opts="onboot static ' +
-                                      sets.sah_node.private_api_ip + '/' +
-                                      sets.private_api_netmask + '"')
+                                      sets.sah_node.private_api_ip + '"') 
+                                      #sets.private_api_netmask + '"')
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^prov_network=.*',
                                       'prov_network="' +
@@ -185,7 +185,7 @@ class Sah(InfraHost):
         FileHelper.replace_expression(sets.sah_kickstart,
                                       '^prov_netmask=.*',
                                       'prov_netmask="' +
-                                      sets.provisioning_netmask +
+                                      #sets.provisioning_netmask +
                                       '"')
         # mtu_settings
         FileHelper.replace_expression(sets.sah_kickstart,
@@ -383,7 +383,8 @@ class Sah(InfraHost):
         conf = conf + (PRIVATE_API_IF
                        + "        "
                        + self.settings.director_node.private_api_ip
-                       + "    " + self.settings.private_api_netmask
+                       #+ "    " + self.settings.private_api_netmask
+                       + "    " + "0.0.0.0"
                        + "     " + self.settings.private_api_network_mtu,)
 
         for line in conf:
@@ -458,7 +459,7 @@ class Sah(InfraHost):
                        "     " + self.settings.public_api_network_mtu,)
         conf = conf + ("enp2s0        " +
                        self.settings.powerflexgw_vm.storage_ip +
-                       "    " + self.settings.storage_netmask +
+                       #"    " + self.settings.storage_netmask +
                        "     " + self.settings.storage_network_mtu,)
         conf = conf + ("enp3s0        " +
                        self.settings.powerflexgw_vm.provisioning_ip +
@@ -532,11 +533,11 @@ class Sah(InfraHost):
                        "     " + self.settings.public_api_network_mtu,)
         conf = conf + ("enp2s0        " +
                        self.settings.powerflexmgmt_vm.storage_ip +
-                       "    " + self.settings.storage_netmask +
+                       #"    " + self.settings.storage_netmask +
                        "     " + self.settings.storage_network_mtu,)
         conf = conf + ("enp3s0        " +
                        self.settings.powerflexmgmt_vm.provisioning_ip +
-                       "    " + self.settings.provisioning_netmask +
+                       #"    " + self.settings.provisioning_netmask +
                        "     " + self.settings.provisioning_network_mtu,)
         for line in conf:
             self.run("echo '" +

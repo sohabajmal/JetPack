@@ -379,11 +379,15 @@ do
     esac
   done
 
-echo "network --noipv6 --no-activate --device=${bridge} --interfacename=${bridge} --bridgeslaves=${bridge_iface[$bridge]} --bootproto=static --onboot=yes" \
-" --mtu=${bridges_mtu[${bridge}]} --ip=${bridge_info[IP]} --netmask=${bridge_info[NETMASK]} --nameserver=${NameServers} --gateway=${Gateway}" >> /tmp/ks_include.txt
-
+if [ "${bridge}" == "br-stor" ] && [ "${bridge}" == "br-priv-api" ] && [ "${bridge}" == "br-prov" ]
+then
+  echo "network --noipv4 --no-activate --device=${bridge} --interfacename=${bridge} --bridgeslaves=${bridge_iface[$bridge]} --bootproto=static --onboot=yes" \
+  " --mtu=${bridges_mtu[${bridge}]} --ipv6=${bridge_info[IP]} --nameserver=${NameServers} --ipv6gateway=${Gateway}" >> /tmp/ks_include.txt
+else
+  echo "network --noipv6 --no-activate --device=${bridge} --interfacename=${bridge} --bridgeslaves=${bridge_iface[$bridge]} --bootproto=static --onboot=yes" \
+  " --mtu=${bridges_mtu[${bridge}]} --ip=${bridge_info[IP]} --netmask=${bridge_info[NETMASK]} --nameserver=${NameServers} --gateway=${Gateway}" >> /tmp/ks_include.txt
+fi
 done
-
 
 # Remove all existing LVM configuration before the installation begins
 echo "Determining LVM PVs"
